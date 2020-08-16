@@ -1,0 +1,25 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+<form method="POST">
+<br>
+<label for="name">Course Name:</label>
+<input type="text" id="name" name="name">
+<br>
+<label for="city">City:</label>
+<input type="text" id="city" name="city">
+<br>
+<label for="state">State:</label>
+<input type="text" id="state" name="state">
+<br>
+<label for="zip_code">Zip Code</label>
+<input type="number" id="zip_code" name="zip_code">
+<br>
+<label for="slope">Slope:</label>
+<input type="number" id="slope" name="slope" min="0" max="200">
+<br>
+<br>
+<input type="submit" value="Submit New Course">
+</form>
+
+{% endblock %}

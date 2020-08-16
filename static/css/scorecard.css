@@ -1,30 +1,34 @@
-.par {
-		background-color: #ccc;
-		color: #777;
-		span {padding: .25em 0;}
-	}
 
-.hole {
+    .hole {
 		background-color: #f63;
 		color: #fff;
 		span {padding: .5em 0;}
-}
-
-.par {
+    }
+    .par {
 		background-color: #ccc;
 		color: #777;
 		span {padding: .25em 0;}
-}
-.score {
+    }
+    .score {
 		color: #f63;
 		span {padding: .75em 0;}
-}
-.input{
+    }
+    .input {
         color: #f63;
         width: 25px;
         border: 1px solid transparent;
         text-align: center;
-}
+    }
+
+    .par_input {
+        color: #000;
+        background-color: #ccc;
+        width: 25px;
+        border: 1px solid transparent;
+        text-align: center;
+        span {padding: .5em 0;}
+    }
+
 	span {
 		border: rgba(0,0,0,.25) solid 1px;
 		border-width: 0 0 0 1px;
@@ -35,7 +39,7 @@
 		&:first-child {
 			text-align: left;
 			padding-left: 1em;
-			border-width: 0;
+			border-width: 1;
 		}
 	}
 
