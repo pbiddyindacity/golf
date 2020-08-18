@@ -16,10 +16,6 @@ class Course(Resource):
                         type=str,
                         required=True,
                         help="The name of the state where the golf course is located.")
-    parser.add_argument('zip_code',
-                        type=int,
-                        required=True,
-                        help="The zip code of the city where the golf course is located.")
     parser.add_argument('slope',
                         type=float,
                         required=True,
@@ -52,11 +48,15 @@ class Course(Resource):
         course = CourseModel.find_by_id(course_id)
         if course:
             course.delete_from_db()
-            return {'message': 'Course deleted from the database.'}
+            return {'message': 'The course has been deleted from the database.'}
         return {'message': 'Course not found.'}, 404
 
 
 class CourseList(Resource):
     def get(self):
         return {'courses': [course.json() for course in CourseModel.find_all()]}
+
+class SingleCourse(Resource):
+    def get(self, name):
+        return {'course': [course.json() for course in CourseModel.find_by_name(name)]}
 

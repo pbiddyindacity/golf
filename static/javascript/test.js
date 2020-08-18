@@ -1,0 +1,3 @@
+function updateScorecard() {
+alert("hi");
+}

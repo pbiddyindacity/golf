@@ -1,0 +1,281 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+<head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Scorecard</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width">
+      <link rel="stylesheet" href="{{ url_for ('static', filename='css/main.css') }}">
+
+
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="../static/javascript/script.js"></script>
+</head>
+
+<div class="container">
+
+  <header>
+    <h1>New Course</h1>
+      <form method="POST" id="courseform" name="courseform">
+        <div class="collectdata">
+        <label for="coursename">Name: </label>
+        <input type="text" class="course_data" name="coursename" id="coursename">
+        <label for="slope">Slope: </label>
+        <input type="number" class="course_data" name="slope" id="slope" min="55" max="155">
+        <br>
+        <label for="city">City: </label>
+        <input type="text" class="course_data" name="city" id="city">
+        <label for="state">State: </label>
+        <input type="text" class="course_data" name="state" id="state">
+        </div>
+    <br>
+    <br>
+  </header>
+
+  <span id="basic"></span>
+
+
+  <section>
+    <table class="responsive-table scorecard">
+    <br>
+      <caption>
+
+      </caption>
+      <thead>
+        <tr class="hole-number">
+          <th scope="col"></th>
+          <th data-title="1" scope="col">1</th>
+          <th data-title="2" scope="col">2</th>
+          <th data-title="3" scope="col">3</th>
+          <th data-title="4" scope="col">4</th>
+          <th data-title="5" scope="col">5</th>
+          <th data-title="6" scope="col">6</th>
+          <th data-title="7" scope="col">7</th>
+          <th data-title="8" scope="col">8</th>
+          <th data-title="9" scope="col">9</th>
+
+          <th data-title="Out" scope="col">Out</th>
+
+          <th data-title="10" scope="col">10</th>
+          <th data-title="11" scope="col">11</th>
+          <th data-title="12" scope="col">12</th>
+          <th data-title="13" scope="col">13</th>
+          <th data-title="14" scope="col">14</th>
+          <th data-title="15" scope="col">15</th>
+          <th data-title="16" scope="col">16</th>
+          <th data-title="17" scope="col">17</th>
+          <th data-title="18" scope="col">18</th>
+
+          <th data-title="In" scope="col">In</th>
+
+          <th data-title="Total" scope="col">Total</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <th data-type="player">Distance</th>
+          <td>
+             <input type="text" class="score_input" id="hole_1_distance" name="hole_1_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_2_distance" name="hole_2_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_3_distance" name="hole_3_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_4_distance" name="hole_4_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_5_distance" name="hole_5_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_6_distance" name="hole_6_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_7_distance" name="hole_7_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_8_distance" name="hole_8_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_9_distance" name="hole_9_distance" maxlength="3">
+          </td>
+          <td>
+             {{ front_9 }}
+          </td>
+
+          <td>
+             <input type="text" class="score_input" id="hole_10_distance" name="hole_10_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_11_distance" name="hole_11_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_12_distance" name="hole_12_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_13_distance" name="hole_13_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_14_distance" name="hole_14_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_15_distance" name="hole_15_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_16_distance" name="hole_16_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_17_distance" name="hole_17_distance" maxlength="3">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_18_distance" name="hole_18_distance" maxlength="3">
+          </td>
+          <td>{{ back_9 }}</td>
+          <td>{{ total_score }}</td>
+        </tr>
+
+        <tr>
+          <th data-type="player">Handicap</th>
+          <td>
+             <input type="text" class="score_input" id="hole_1_handicap" name="hole_1_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_2_handicap" name="hole_2_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_3_handicap" name="hole_3_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_4_handicap" name="hole_4_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_5_handicap" name="hole_5_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_6_handicap" name="hole_6_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_7_handicap" name="hole_7_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_8_handicap" name="hole_8_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_9_handicap" name="hole_9_handicap" maxlength="2">
+          </td>
+          <td>&nbsp;</td>
+
+          <td>
+             <input type="text" class="score_input" id="hole_10_handicap" name="hole_10_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_11_handicap" name="hole_11_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_12_handicap" name="hole_12_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_13_handicap" name="hole_13_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_14_handicap" name="hole_14_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_15_handicap" name="hole_15_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_16_handicap" name="hole_16_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_17_handicap" name="hole_17_handicap" maxlength="2">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_18_handicap" name="hole_18_handicap" maxlength="2">
+          </td>
+          <td>&nbsp;</td>
+
+          <td>&nbsp;</td>
+        </tr>
+
+        <tr>
+          <th data-type="player">Par</th>
+          <td>
+             <input type="text" class="score_input" id="hole_1_par" name="hole_1_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_2_par" name="hole_2_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_3_par" name="hole_3_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_4_par" name="hole_4_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_5_par" name="hole_5_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_6_par" name="hole_6_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_7_par" name="hole_7_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_8_par" name="hole_8_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_9_par" name="hole_9_par" maxlength="1">
+          </td>
+          <td></td>
+          <td>
+             <input type="text" class="score_input" id="hole_10_par" name="hole_10_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_11_par" name="hole_11_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_12_par" name="hole_12_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_13_par" name="hole_13_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_14_par" name="hole_14_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_15_par" name="hole_15_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_16_par" name="hole_16_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_17_par" name="hole_17_par" maxlength="1">
+          </td>
+          <td>
+             <input type="text" class="score_input" id="hole_18_par" name="hole_18_par" maxlength="1">
+          </td>
+
+          <td></td>
+          <td></td>
+        </tr>
+
+      </tbody>
+
+      <tfoot>
+      </tfoot>
+    </table>
+  </section>
+
+    <div class="submit_button">
+             <input type="submit" class="submit_button" value="Submit New Course" onclick="this.form.submit()"">
+    </div>
+    </form>
+  </div>
+
+  </body>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+<head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Scorecard</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width">
+      <link rel="stylesheet" href="{{ url_for ('static', filename='css/main.css') }}">
+
+
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="../static/javascript/script.js"></script>
+</head>
+
+<div class="container">
+
+  <header>
+    <h1>SELECT COURSE</h1>
+      <form method="POST" id="courseform" name="courseform">
+        <select class="selectdata" name="course" id="course" onchange="this.form.submit();">
+        <option value="" selected disabled hidden></option>
+        <option value="new">Create New Course</option>
+            {% for course in courses_list %}
+                <option value="{{ course['name'] }}" id="{{ course['name'] }}">{{ course['name'] }}</option>
+            {% endfor %}
+        </select>
+      </form>
+    <br>
+    <br>
+  </header>
+
+  </div>
+  </body>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+
+<h3>Available Golfers</h3>
+<ul id="golfers">
+    {% for golfer in golfers_list %}
+        <li>{{golfer['name']}}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

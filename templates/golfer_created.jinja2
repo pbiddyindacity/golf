@@ -1,0 +1,14 @@
+{% extends 'base.jinja2' %}
+
+{% block content %}
+<h2>{{ name }} was successfully added to the database</h2>
+<br>
+<br>
+<br>
+<h3>Available Golfers</h3>
+<ul id="golfers">
+    {% for golfer in golfers_list %}
+        <li>{{golfer['name']}}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

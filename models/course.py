@@ -6,15 +6,15 @@ class CourseModel(db.Model):
     name = db.Column(db.String(80))
     city = db.Column(db.String(80))
     state = db.Column(db.String(80))
-    zip_code = db.Column(db.Integer)
     slope = db.Column(db.Float(precision=1))
-#    rounds = db.relationship('RoundModel', lazy='dynamic')
 
-    def __init__(self, name, city, state, zip_code, slope):
+#    holes = db.relationship('HoleModel', lazy='dynamic')
+
+
+    def __init__(self, name, city, state, slope):
         self.name = name
         self.city = city
         self.state = state
-        self.zip_code = zip_code
         self.slope = slope
 
     def json(self):
@@ -23,7 +23,6 @@ class CourseModel(db.Model):
             'name': self.name,
             'city': self.city,
             'state': self.state,
-            'zip_code': self.zip_code,
             'slope': self.slope
         }
 
