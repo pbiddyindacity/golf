@@ -3,14 +3,14 @@ from models.score import ScoreModel
 
 class Score(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('golfer_id',
-                        type=int,
-                        required=True,
-                        help="The ID for the golfer.")
     parser.add_argument('course_id',
                         type=int,
                         required=True,
                         help="The ID for the course.")
+    parser.add_argument('golfer_id',
+                        type=int,
+                        required=True,
+                        help="The ID for the golfer.")
     parser.add_argument('hole_number',
                         type=int,
                         required=True,

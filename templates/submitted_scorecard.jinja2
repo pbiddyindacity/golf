@@ -18,14 +18,9 @@
 
   <header>
     <h1>Scorecard</h1>
-    <p colspan="9" id="selected_course"><strong>{{ name }}</strong> in {{ city }}, {{ state }}  {{ zip_code }}
+    <p colspan="9" id="selected_course"><strong>{{ name }}</strong> in {{ city }}, {{ state }}  {{ zip_code }} on {{ new_round_date }}
     <br>
     <i>Slope: {{ slope }}</i>
-    <form method="POST" id="scorecard" name="scorecard">
-    <div class="round_date">
-        <label for="round_date" class="round_date">Round Date: </label>
-        <input type="date" required="required" class="round_date" id="round_date" name="round_date" min="2017-01-01" max="2030-12-3"/>
-    <div>
     </p>
 
   </header>
@@ -151,108 +146,67 @@
         <tr>
 
           <th data-type="player" class"rowheader">
-            <select class="selectplayer" name="golfer_1" id="golfer_1">
-                <option value="" selected disabled hidden></option>
-                {% for golfer in golfers_list %}
-                    <option value="{{ golfer['name'] }}" id="{{ golfer['name'] }}">{{ golfer['name'] }}</option>
-                {% endfor %}
-        </select>
+            {{ p1_name }}
           </th>
           <td>
-            <span class="{{hole_1_style}}">
-                <input type="text" class="score_input" id="p1_hole_1_score" name="p1_hole_1_score" maxlength="2">
-            </span>
+            <span class="{{hole_1_style}}">{{ p1h1 }}</span>
           </td>
           <td>
-            <span class="{{hole_2_style}}">
-                <input type="text" class="score_input" id="p1_hole_2_score" name="p1_hole_2_score" maxlength="2">
-            </span>
+            <span class="{{hole_2_style}}">{{ p1h2 }}</span>
           </td>
           <td>
-            <span class="{{hole_3_style}}">
-                <input type="text" class="score_input" id="p1_hole_3_score" name="p1_hole_3_score" maxlength="2">
-            </span>
+            <span class="{{hole_3_style}}">{{ p1h3 }}</span>
           </td>
           <td>
-            <span class="{{hole_4_style}}">
-                <input type="text" class="score_input" id="p1_hole_4_score" name="p1_hole_4_score" maxlength="2">
-            </span>
+            <span class="{{hole_4_style}}">{{ p1h4 }}</span>
           </td>
           <td>
-            <span class="{{hole_5_style}}">
-                <input type="text" class="score_input" id="p1_hole_5_score" name="p1_hole_5_score" maxlength="2">
-            </span>
+            <span class="{{hole_5_style}}">{{ p1h5 }}</span>
           </td>
           <td>
-            <span class="{{hole_6_style}}">
-                <input type="text" class="score_input" id="p1_hole_6_score" name="p1_hole_6_score" maxlength="2">
-            </span>
+            <span class="{{hole_6_style}}">{{ p1h6 }}</span>
           </td>
           <td>
-            <span class="{{hole_7_style}}">
-                <input type="text" class="score_input" id="p1_hole_7_score" name="p1_hole_7_score" maxlength="2">
-            </span>
+            <span class="{{hole_7_style}}">{{ p1h7 }}</span>
           </td>
           <td>
-            <span class="{{hole_8_style}}">
-                <input type="text" class="score_input" id="p1_hole_8_score" name="p1_hole_8_score" maxlength="2">
-            </span>
+            <span class="{{hole_8_style}}">{{ p1h8 }}</span>
           </td>
           <td>
-            <span class="{{hole_9_style}}">
-                <input type="text" class="score_input" id="p1_hole_9_score" name="p1_hole_9_score" maxlength="2">
-            </span>
+            <span class="{{hole_9_style}}">{{ p1h9 }}</span>
           </td>
-          <td></td>
+          <td><span>{{ p1f9 }}</span></td>
 
           <td>
-            <span class="{{hole_10_style}}">
-                <input type="text" class="score_input" id="p1_hole_10_score" name="p1_hole_10_score" maxlength="2">
-            </span>
+            <span class="{{hole_10_style}}">{{ p1h10 }}</span>
           </td>
           <td>
-            <span class="{{hole_11_style}}">
-                <input type="text" class="score_input" id="p1_hole_11_score" name="p1_hole_11_score" maxlength="2">
-            </span>
+            <span class="{{hole_11_style}}">{{ p1h11 }}</span>
           </td>
           <td>
-            <span class="{{hole_12_style}}">
-                <input type="text" class="score_input" id="p1_hole_12_score" name="p1_hole_12_score" maxlength="2">
-            </span>
+            <span class="{{hole_12_style}}">{{ p1h12 }}</span>
           </td>
           <td>
-            <span class="{{hole_13_style}}">
-                <input type="text" class="score_input" id="p1_hole_13_score" name="p1_hole_13_score" maxlength="2">
-            </span>
+            <span class="{{hole_13_style}}">{{ p1h13 }}</span>
           </td>
           <td>
-            <span class="{{hole_14_style}}">
-                <input type="text" class="score_input" id="p1_hole_14_score" name="p1_hole_14_score" maxlength="2">
-            </span>
+            <span class="{{hole_14_style}}">{{ p1h14 }}</span>
           </td>
           <td>
-            <span class="{{hole_15_style}}">
-                <input type="text" class="score_input" id="p1_hole_15_score" name="p1_hole_15_score" maxlength="2">
-            </span>
+            <span class="{{hole_15_style}}">{{ p1h15 }}</span>
           </td>
           <td>
-            <span class="{{hole_16_style}}">
-                <input type="text" class="score_input" id="p1_hole_16_score" name="p1_hole_16_score" maxlength="2">
-            </span>
+            <span class="{{hole_16_style}}">{{ p1h16 }}</span>
           </td>
           <td>
-            <span class="{{hole_17_style}}">
-                <input type="text" class="score_input" id="p1_hole_17_score" name="p1_hole_17_score" maxlength="2">
-            </span>
+            <span class="{{hole_17_style}}">{{ p1h17 }}</span>
           </td>
           <td>
-            <span class="{{hole_18_style}}">
-                <input type="text" class="score_input" id="p1_hole_18_score" name="p1_hole_18_score" maxlength="2">
-            </span>
+            <span class="{{hole_18_style}}">{{ p1h18 }}</span>
           </td>
-          <td></td>
+          <td><span>{{ p1b9 }}</span></td>
 
-          <td></td>
+          <td><span>{{ p1_total_score }}</span></td>
         </tr>
 
       </tbody>
@@ -262,10 +216,6 @@
       </tfoot>
     </table>
   </section>
-   <div class="submit_button">
-        <input type="submit" class="submit_button" value="Submit Scorecard">
-   </div>
-    </form>
   </div>
   </body>
 {% endblock %}

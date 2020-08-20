@@ -1,6 +1,6 @@
 import os
 
-
+import pytz
 from flask import Flask, render_template, request, redirect, url_for
 from flask_restful import Api
 
@@ -8,9 +8,9 @@ from db import db
 from models.course import CourseModel
 from models.golfer import GolferModel
 from models.hole import HoleModel
-from resources.course import Course, CourseList, SingleCourse
-from resources.golfer import GolferList
-from resources.hole import Hole
+from models.score import ScoreModel
+from datetime import datetime
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
@@ -25,12 +25,12 @@ def create_tables():
     db.create_all()
 
 
-@app.route('/')
+@app.route('/golf')
 def home():
     return render_template('home.jinja2')
 
 
-@app.route('/scorecard/new', methods=['GET', 'POST'])
+@app.route('/golf/scorecard/new', methods=['GET', 'POST'])
 def create_course():
     if request.method == "POST":
         name = request.form.get('coursename')
@@ -45,155 +45,111 @@ def create_course():
 
         print(name, city, state, slope, course)
 
-        hole_1_distance = int(request.form.get('hole_1_distance'))
-        hole_2_distance = int(request.form.get('hole_2_distance'))
-        hole_3_distance = int(request.form.get('hole_3_distance'))
-        hole_4_distance = int(request.form.get('hole_4_distance'))
-        hole_5_distance = int(request.form.get('hole_5_distance'))
-        hole_6_distance = int(request.form.get('hole_6_distance'))
-        hole_7_distance = int(request.form.get('hole_7_distance'))
-        hole_8_distance = int(request.form.get('hole_8_distance'))
-        hole_9_distance = int(request.form.get('hole_9_distance'))
-        hole_10_distance = int(request.form.get('hole_10_distance'))
-        hole_11_distance = int(request.form.get('hole_11_distance'))
-        hole_12_distance = int(request.form.get('hole_12_distance'))
-        hole_13_distance = int(request.form.get('hole_13_distance'))
-        hole_14_distance = int(request.form.get('hole_14_distance'))
-        hole_15_distance = int(request.form.get('hole_15_distance'))
-        hole_16_distance = int(request.form.get('hole_16_distance'))
-        hole_17_distance = int(request.form.get('hole_17_distance'))
-        hole_18_distance = int(request.form.get('hole_18_distance'))
+        hole_distance_list = []
 
-        front_9_distance = (hole_1_distance + hole_2_distance + hole_3_distance +
-                            hole_4_distance + hole_5_distance + hole_6_distance +
-                            hole_7_distance + hole_8_distance + hole_9_distance)
-        back_9_distance = (hole_10_distance + hole_11_distance + hole_12_distance +
-                           hole_13_distance + hole_14_distance + hole_15_distance +
-                           hole_16_distance + hole_17_distance + hole_18_distance)
+        hole_distance_list.append(int(request.form.get('h1d')))
+        hole_distance_list.append(int(request.form.get('h2d')))
+        hole_distance_list.append(int(request.form.get('h3d')))
+        hole_distance_list.append(int(request.form.get('h4d')))
+        hole_distance_list.append(int(request.form.get('h5d')))
+        hole_distance_list.append(int(request.form.get('h6d')))
+        hole_distance_list.append(int(request.form.get('h7d')))
+        hole_distance_list.append(int(request.form.get('h8d')))
+        hole_distance_list.append(int(request.form.get('h9d')))
+        hole_distance_list.append(int(request.form.get('h10d')))
+        hole_distance_list.append(int(request.form.get('h11d')))
+        hole_distance_list.append(int(request.form.get('h12d')))
+        hole_distance_list.append(int(request.form.get('h13d')))
+        hole_distance_list.append(int(request.form.get('h14d')))
+        hole_distance_list.append(int(request.form.get('h15d')))
+        hole_distance_list.append(int(request.form.get('h16d')))
+        hole_distance_list.append(int(request.form.get('h17d')))
+        hole_distance_list.append(int(request.form.get('h18d')))
+
+        front_9_distance = (hole_distance_list[0] + hole_distance_list[1] + hole_distance_list[2] +
+                       hole_distance_list[3] + hole_distance_list[4] + hole_distance_list[5] +
+                       hole_distance_list[6] + hole_distance_list[7] + hole_distance_list[8])
+        back_9_distance = (hole_distance_list[9] + hole_distance_list[10] + hole_distance_list[11] +
+                      hole_distance_list[12] + hole_distance_list[13] + hole_distance_list[14] +
+                      hole_distance_list[15] + hole_distance_list[16] + hole_distance_list[17])
 
         total_distance = front_9_distance + back_9_distance
 
-        hole_1_handicap = int(request.form.get('hole_1_handicap'))
-        hole_2_handicap = int(request.form.get('hole_2_handicap'))
-        hole_3_handicap = int(request.form.get('hole_3_handicap'))
-        hole_4_handicap = int(request.form.get('hole_4_handicap'))
-        hole_5_handicap = int(request.form.get('hole_5_handicap'))
-        hole_6_handicap = int(request.form.get('hole_6_handicap'))
-        hole_7_handicap = int(request.form.get('hole_7_handicap'))
-        hole_8_handicap = int(request.form.get('hole_8_handicap'))
-        hole_9_handicap = int(request.form.get('hole_9_handicap'))
-        hole_10_handicap = int(request.form.get('hole_10_handicap'))
-        hole_11_handicap = int(request.form.get('hole_11_handicap'))
-        hole_12_handicap = int(request.form.get('hole_12_handicap'))
-        hole_13_handicap = int(request.form.get('hole_13_handicap'))
-        hole_14_handicap = int(request.form.get('hole_14_handicap'))
-        hole_15_handicap = int(request.form.get('hole_15_handicap'))
-        hole_16_handicap = int(request.form.get('hole_16_handicap'))
-        hole_17_handicap = int(request.form.get('hole_17_handicap'))
-        hole_18_handicap = int(request.form.get('hole_18_handicap'))
+        hole_handicap_list = []
+        
+        hole_handicap_list.append(int(request.form.get('h1p')))
+        hole_handicap_list.append(int(request.form.get('h2h')))
+        hole_handicap_list.append(int(request.form.get('h3h')))
+        hole_handicap_list.append(int(request.form.get('h4h')))
+        hole_handicap_list.append(int(request.form.get('h5h')))
+        hole_handicap_list.append(int(request.form.get('h6h')))
+        hole_handicap_list.append(int(request.form.get('h7h')))
+        hole_handicap_list.append(int(request.form.get('h8h')))
+        hole_handicap_list.append(int(request.form.get('h9h')))
+        hole_handicap_list.append(int(request.form.get('h10h')))
+        hole_handicap_list.append(int(request.form.get('h11h')))
+        hole_handicap_list.append(int(request.form.get('h12h')))
+        hole_handicap_list.append(int(request.form.get('h13h')))
+        hole_handicap_list.append(int(request.form.get('h14h')))
+        hole_handicap_list.append(int(request.form.get('h15h')))
+        hole_handicap_list.append(int(request.form.get('h16h')))
+        hole_handicap_list.append(int(request.form.get('h17h')))
+        hole_handicap_list.append(int(request.form.get('h18h')))
 
-        hole_1_par = int(request.form.get('hole_1_par'))
-        hole_2_par = int(request.form.get('hole_2_par'))
-        hole_3_par = int(request.form.get('hole_3_par'))
-        hole_4_par = int(request.form.get('hole_4_par'))
-        hole_5_par = int(request.form.get('hole_5_par'))
-        hole_6_par = int(request.form.get('hole_6_par'))
-        hole_7_par = int(request.form.get('hole_7_par'))
-        hole_8_par = int(request.form.get('hole_8_par'))
-        hole_9_par = int(request.form.get('hole_9_par'))
-        hole_10_par = int(request.form.get('hole_10_par'))
-        hole_11_par = int(request.form.get('hole_11_par'))
-        hole_12_par = int(request.form.get('hole_12_par'))
-        hole_13_par = int(request.form.get('hole_13_par'))
-        hole_14_par = int(request.form.get('hole_14_par'))
-        hole_15_par = int(request.form.get('hole_15_par'))
-        hole_16_par = int(request.form.get('hole_16_par'))
-        hole_17_par = int(request.form.get('hole_17_par'))
-        hole_18_par = int(request.form.get('hole_18_par'))
-
-        front_9_par = (hole_1_par + hole_2_par + hole_3_par +
-                       hole_4_par + hole_5_par + hole_6_par +
-                       hole_7_par + hole_8_par + hole_9_par)
-        back_9_par = (hole_10_par + hole_11_par + hole_12_par +
-                      hole_13_par + hole_14_par + hole_15_par +
-                      hole_16_par + hole_17_par + hole_18_par)
+        hole_par_list = []
+        
+        hole_par_list.append(int(request.form.get('h1p')))
+        hole_par_list.append(int(request.form.get('h2p')))
+        hole_par_list.append(int(request.form.get('h3p')))
+        hole_par_list.append(int(request.form.get('h4p')))
+        hole_par_list.append(int(request.form.get('h5p')))
+        hole_par_list.append(int(request.form.get('h6p')))
+        hole_par_list.append(int(request.form.get('h7p')))
+        hole_par_list.append(int(request.form.get('h8p')))
+        hole_par_list.append(int(request.form.get('h9p')))
+        hole_par_list.append(int(request.form.get('h10p')))
+        hole_par_list.append(int(request.form.get('h11p')))
+        hole_par_list.append(int(request.form.get('h12p')))
+        hole_par_list.append(int(request.form.get('h13p')))
+        hole_par_list.append(int(request.form.get('h14p')))
+        hole_par_list.append(int(request.form.get('h15p')))
+        hole_par_list.append(int(request.form.get('h16p')))
+        hole_par_list.append(int(request.form.get('h17p')))
+        hole_par_list.append(int(request.form.get('h18p')))
+        
+        front_9_par = (hole_par_list[0] + hole_par_list[1] + hole_par_list[2] +
+                       hole_par_list[3] + hole_par_list[4] + hole_par_list[5] + 
+                       hole_par_list[6] + hole_par_list[7] + hole_par_list[8])
+        back_9_par = (hole_par_list[9] + hole_par_list[10] + hole_par_list[11] + 
+                      hole_par_list[12] + hole_par_list[13] + hole_par_list[14] + 
+                      hole_par_list[15] + hole_par_list[16] + hole_par_list[17])
 
         total_par = front_9_par + back_9_par
 
-        hole_1 = HoleModel(course.id, 1, hole_1_par, hole_1_handicap, hole_1_distance)
-        hole_2 = HoleModel(course.id, 2, hole_2_par, hole_2_handicap, hole_2_distance)
-        hole_3 = HoleModel(course.id, 3, hole_3_par, hole_3_handicap, hole_3_distance)
-        hole_4 = HoleModel(course.id, 4, hole_4_par, hole_4_handicap, hole_4_distance)
-        hole_5 = HoleModel(course.id, 5, hole_5_par, hole_5_handicap, hole_5_distance)
-        hole_6 = HoleModel(course.id, 6, hole_6_par, hole_6_handicap, hole_6_distance)
-        hole_7 = HoleModel(course.id, 7, hole_7_par, hole_7_handicap, hole_7_distance)
-        hole_8 = HoleModel(course.id, 8, hole_8_par, hole_8_handicap, hole_8_distance)
-        hole_9 = HoleModel(course.id, 9, hole_9_par, hole_9_handicap, hole_9_distance)
-        hole_10 = HoleModel(course.id, 10, hole_10_par, hole_10_handicap, hole_10_distance)
-        hole_11 = HoleModel(course.id, 11, hole_11_par, hole_11_handicap, hole_11_distance)
-        hole_12 = HoleModel(course.id, 12, hole_12_par, hole_12_handicap, hole_12_distance)
-        hole_13 = HoleModel(course.id, 13, hole_13_par, hole_13_handicap, hole_13_distance)
-        hole_14 = HoleModel(course.id, 14, hole_14_par, hole_14_handicap, hole_14_distance)
-        hole_15 = HoleModel(course.id, 15, hole_15_par, hole_15_handicap, hole_15_distance)
-        hole_16 = HoleModel(course.id, 16, hole_16_par, hole_16_handicap, hole_16_distance)
-        hole_17 = HoleModel(course.id, 17, hole_17_par, hole_17_handicap, hole_17_distance)
-        hole_18 = HoleModel(course.id, 18, hole_18_par, hole_18_handicap, hole_18_distance)
+        for i in range(1, 19):
+            hole = HoleModel(course.id, i, hole_par_list[i - 1], hole_handicap_list[i - 1], hole_distance_list[i - 1])
+            hole.save_to_db()
 
-        hole_1.save_to_db()
-        hole_2.save_to_db()
-        hole_3.save_to_db()
-        hole_4.save_to_db()
-        hole_5.save_to_db()
-        hole_6.save_to_db()
-        hole_7.save_to_db()
-        hole_8.save_to_db()
-        hole_9.save_to_db()
-        hole_10.save_to_db()
-        hole_11.save_to_db()
-        hole_12.save_to_db()
-        hole_13.save_to_db()
-        hole_14.save_to_db()
-        hole_15.save_to_db()
-        hole_16.save_to_db()
-        hole_17.save_to_db()
-        hole_18.save_to_db()
+        h1p, h2p, h3p, h4p, h5p, h6p, h7p, h8p, h9p, h10p, h11p, h12p, h13p, h14p, h15p, h16p, h17p, h18p = [p for p in hole_par_list]
+        h1d, h2d, h3d, h4d, h5d, h6d, h7d, h8d, h9d, h10d, h11d, h12d, h13d, h14d, h15d, h16d, h17d, h18d = [d for d in hole_distance_list]
+        h1h, h2h, h3h, h4h, h5h, h6h, h7h, h8h, h9h, h10h, h11h, h12h, h13h, h14h, h15h, h16h, h17h, h18h = [h for h in hole_handicap_list]
 
         return render_template('course_scorecard.jinja2', name=name, city=city, state=state, slope=slope,
-                               hole_1_distance=hole_1_distance, hole_2_distance=hole_2_distance,
-                               hole_3_distance=hole_3_distance, hole_4_distance=hole_4_distance,
-                               hole_5_distance=hole_5_distance, hole_6_distance=hole_6_distance,
-                               hole_7_distance=hole_7_distance, hole_8_distance=hole_8_distance,
-                               hole_9_distance=hole_9_distance, hole_10_distance=hole_10_distance,
-                               hole_11_distance=hole_11_distance, hole_12_distance=hole_12_distance,
-                               hole_13_distance=hole_13_distance, hole_14_distance=hole_14_distance,
-                               hole_15_distance=hole_15_distance, hole_16_distance=hole_16_distance,
-                               hole_17_distance=hole_17_distance, hole_18_distance=hole_18_distance,
-                               hole_1_par=hole_1_par, hole_2_par=hole_2_par,
-                               hole_3_par=hole_3_par, hole_4_par=hole_4_par,
-                               hole_5_par=hole_5_par, hole_6_par=hole_6_par,
-                               hole_7_par=hole_7_par, hole_8_par=hole_8_par,
-                               hole_9_par=hole_9_par, hole_10_par=hole_10_par,
-                               hole_11_par=hole_11_par, hole_12_par=hole_12_par,
-                               hole_13_par=hole_13_par, hole_14_par=hole_14_par,
-                               hole_15_par=hole_15_par, hole_16_par=hole_16_par,
-                               hole_17_par=hole_17_par, hole_18_par=hole_18_par,
-                               hole_1_handicap=hole_1_handicap, hole_2_handicap=hole_2_handicap,
-                               hole_3_handicap=hole_3_handicap, hole_4_handicap=hole_4_handicap,
-                               hole_5_handicap=hole_5_handicap, hole_6_handicap=hole_6_handicap,
-                               hole_7_handicap=hole_7_handicap, hole_8_handicap=hole_8_handicap,
-                               hole_9_handicap=hole_9_handicap, hole_10_handicap=hole_10_handicap,
-                               hole_11_handicap=hole_11_handicap, hole_12_handicap=hole_12_handicap,
-                               hole_13_handicap=hole_13_handicap, hole_14_handicap=hole_14_handicap,
-                               hole_15_handicap=hole_15_handicap, hole_16_handicap=hole_16_handicap,
-                               hole_17_handicap=hole_17_handicap, hole_18_handicap=hole_18_handicap,
-                               front_9_distance=front_9_distance, back_9_distance=back_9_distance,
-                               front_9_par=front_9_par, back_9_par=back_9_par,
+                               h1p=h1p, h2p=h2p, h3p=h3p, h4p=h4p, h5p=h5p, h6p=h6p, h7p=h7p, h8p=h8p, h9p=h9p,
+                               h10p=h10p, h11p=h11p, h12p=h12p, h13p=h13p, h14p=h14p, h15p=h15p, h16p=h16p, h17p=h17p,
+                               h18p=h18p, h1d=h1d, h2d=h2d, h3d=h3d, h4d=h4d, h5d=h5d, h6d=h6d, h7d=h7d, h8d=h8d,
+                               h9d=h9d, h10d=h10d, h11d=h11d, h12d=h12d, h13d=h13d, h14d=h14d, h15d=h15d, h16d=h16d,
+                               h17d=h17d, h18d=h18d, h1h=h1h, h2h=h2h, h3h=h3h, h4h=h4h, h5h=h5h, h6h=h6h, h7h=h7h,
+                               h8h=h8h, h9h=h9h, h10h=h10h, h11h=h11h, h12h=h12h, h13h=h13h, h14h=h14h, h15h=h15h,
+                               h16h=h16h, h17h=h17h, h18h=h18h, front_9_distance=front_9_distance,
+                               back_9_distance=back_9_distance, front_9_par=front_9_par, back_9_par=back_9_par,
                                total_distance=total_distance, total_par=total_par)
+
 
     return render_template('blank_scorecard.jinja2')
 
 
-@app.route('/golfer/create', methods=['GET', 'POST'])
+@app.route('/golf/golfer/create', methods=['GET', 'POST'])
 def create_golfer():
     if request.method == "POST":
         name = request.form.get('name')
@@ -209,7 +165,7 @@ def create_golfer():
     return render_template('create_golfer.jinja2')
 
 
-@app.route('/scorecard', methods=['GET', 'POST'])
+@app.route('/golf/scorecard', methods=['GET', 'POST'])
 def new_scorecard():
     if request.method == "POST":
         name = request.form.get('course')
@@ -219,10 +175,10 @@ def new_scorecard():
     return render_template('select_scorecard.jinja2', courses_list=courses_list)
 
 
-@app.route('/scorecard/<string:name>', methods=['GET', 'POST'])
+@app.route('/golf/scorecard/<string:name>', methods=['GET', 'POST'])
 def course_scorecard(name):
     if name == 'new':
-        return redirect(url_for(create_course))
+        return redirect(url_for('create_course'))
     course = CourseModel.find_by_name(name)
     course_details = course.json()
     _id = course_details['id']
@@ -231,162 +187,157 @@ def course_scorecard(name):
     state = course_details['state']
     slope = course_details['slope']
 
-    hole_1 = HoleModel.find_by_course_hole(_id, 1)
-    hole_2 = HoleModel.find_by_course_hole(_id, 2)
-    hole_3 = HoleModel.find_by_course_hole(_id, 3)
-    hole_4 = HoleModel.find_by_course_hole(_id, 4)
-    hole_5 = HoleModel.find_by_course_hole(_id, 5)
-    hole_6 = HoleModel.find_by_course_hole(_id, 6)
-    hole_7 = HoleModel.find_by_course_hole(_id, 7)
-    hole_8 = HoleModel.find_by_course_hole(_id, 8)
-    hole_9 = HoleModel.find_by_course_hole(_id, 9)
-    hole_10 = HoleModel.find_by_course_hole(_id, 10)
-    hole_11 = HoleModel.find_by_course_hole(_id, 11)
-    hole_12 = HoleModel.find_by_course_hole(_id, 12)
-    hole_13 = HoleModel.find_by_course_hole(_id, 13)
-    hole_14 = HoleModel.find_by_course_hole(_id, 14)
-    hole_15 = HoleModel.find_by_course_hole(_id, 15)
-    hole_16 = HoleModel.find_by_course_hole(_id, 16)
-    hole_17 = HoleModel.find_by_course_hole(_id, 17)
-    hole_18 = HoleModel.find_by_course_hole(_id, 18)
-    hole_1_details = hole_1.json()
-    hole_2_details = hole_2.json()
-    hole_3_details = hole_3.json()
-    hole_4_details = hole_4.json()
-    hole_5_details = hole_5.json()
-    hole_6_details = hole_6.json()
-    hole_7_details = hole_7.json()
-    hole_8_details = hole_8.json()
-    hole_9_details = hole_9.json()
-    hole_10_details = hole_10.json()
-    hole_11_details = hole_11.json()
-    hole_12_details = hole_12.json()
-    hole_13_details = hole_13.json()
-    hole_14_details = hole_14.json()
-    hole_15_details = hole_15.json()
-    hole_16_details = hole_16.json()
-    hole_17_details = hole_17.json()
-    hole_18_details = hole_18.json()
+    front_9_distance = 0
+    back_9_distance = 0
+    front_9_par = 0
+    back_9_par = 0
+    p1f9 = 0
+    p1b9 = 0
+    par_list = []
+    distance_list = []
+    handicap_list = []
 
-    hole_1_distance = hole_1_details['distance']
-    hole_2_distance = hole_2_details['distance']
-    hole_3_distance = hole_3_details['distance']
-    hole_4_distance = hole_4_details['distance']
-    hole_5_distance = hole_5_details['distance']
-    hole_6_distance = hole_6_details['distance']
-    hole_7_distance = hole_7_details['distance']
-    hole_8_distance = hole_8_details['distance']
-    hole_9_distance = hole_9_details['distance']
-    hole_10_distance = hole_10_details['distance']
-    hole_11_distance = hole_11_details['distance']
-    hole_12_distance = hole_12_details['distance']
-    hole_13_distance = hole_13_details['distance']
-    hole_14_distance = hole_14_details['distance']
-    hole_15_distance = hole_15_details['distance']
-    hole_16_distance = hole_16_details['distance']
-    hole_17_distance = hole_17_details['distance']
-    hole_18_distance = hole_18_details['distance']
+    for i in range(1, 19):
+        hole = HoleModel.find_by_course_hole(_id, i)
+        hole_details = hole.json()
+        hole_par = hole_details['par']
+        hole_distance = hole_details['distance']
+        hole_handicap = hole_details['handicap']
+        par_list.append(hole_par)
+        distance_list.append(hole_distance)
+        handicap_list.append(hole_handicap)
 
-    front_9_distance = (hole_1_distance + hole_2_distance + hole_3_distance +
-                        hole_4_distance + hole_5_distance + hole_6_distance +
-                        hole_7_distance + hole_8_distance + hole_9_distance)
-    back_9_distance = (hole_10_distance + hole_11_distance + hole_12_distance +
-                       hole_13_distance + hole_14_distance + hole_15_distance +
-                       hole_16_distance + hole_17_distance + hole_18_distance)
-
-    total_distance = front_9_distance + back_9_distance
-
-    hole_1_handicap = hole_1_details['handicap']
-    hole_2_handicap = hole_2_details['handicap']
-    hole_3_handicap = hole_3_details['handicap']
-    hole_4_handicap = hole_4_details['handicap']
-    hole_5_handicap = hole_5_details['handicap']
-    hole_6_handicap = hole_6_details['handicap']
-    hole_7_handicap = hole_7_details['handicap']
-    hole_8_handicap = hole_8_details['handicap']
-    hole_9_handicap = hole_9_details['handicap']
-    hole_10_handicap = hole_10_details['handicap']
-    hole_11_handicap = hole_11_details['handicap']
-    hole_12_handicap = hole_12_details['handicap']
-    hole_13_handicap = hole_13_details['handicap']
-    hole_14_handicap = hole_14_details['handicap']
-    hole_15_handicap = hole_15_details['handicap']
-    hole_16_handicap = hole_16_details['handicap']
-    hole_17_handicap = hole_17_details['handicap']
-    hole_18_handicap = hole_18_details['handicap']
-
-    hole_1_par = hole_1_details['par']
-    hole_2_par = hole_2_details['par']
-    hole_3_par = hole_3_details['par']
-    hole_4_par = hole_4_details['par']
-    hole_5_par = hole_5_details['par']
-    hole_6_par = hole_6_details['par']
-    hole_7_par = hole_7_details['par']
-    hole_8_par = hole_8_details['par']
-    hole_9_par = hole_9_details['par']
-    hole_10_par = hole_10_details['par']
-    hole_11_par = hole_11_details['par']
-    hole_12_par = hole_12_details['par']
-    hole_13_par = hole_13_details['par']
-    hole_14_par = hole_14_details['par']
-    hole_15_par = hole_15_details['par']
-    hole_16_par = hole_16_details['par']
-    hole_17_par = hole_17_details['par']
-    hole_18_par = hole_18_details['par']
-
-    front_9_par = (hole_1_par + hole_2_par + hole_3_par +
-                   hole_4_par + hole_5_par + hole_6_par +
-                   hole_7_par + hole_8_par + hole_9_par)
-    back_9_par = (hole_10_par + hole_11_par + hole_12_par +
-                  hole_13_par + hole_14_par + hole_15_par +
-                  hole_16_par + hole_17_par + hole_18_par)
+        if i < 10:
+            front_9_par += hole_par
+            front_9_distance += hole_distance
+        elif i >= 10:
+            back_9_par += hole_par
+            back_9_distance += hole_distance
 
     total_par = front_9_par + back_9_par
+    total_distance = front_9_distance + back_9_distance
+
+
+    h1p, h2p, h3p, h4p, h5p, h6p, h7p, h8p, h9p, h10p, h11p, h12p, h13p, h14p, h15p, h16p, h17p, h18p = [p for p in par_list]
+    h1d, h2d, h3d, h4d, h5d, h6d, h7d, h8d, h9d, h10d, h11d, h12d, h13d, h14d, h15d, h16d, h17d, h18d = [d for d in distance_list]
+    h1h, h2h, h3h, h4h, h5h, h6h, h7h, h8h, h9h, h10h, h11h, h12h, h13h, h14h, h15h, h16h, h17h, h18h = [h for h in handicap_list]
+
+    if request.method == "POST":
+        course = CourseModel.find_by_name(name)
+        course_details = course.json()
+        course_id = course_details['id']
+
+        p1_name = request.form.get('golfer_1')
+        p1 = GolferModel.find_by_name(p1_name)
+        p1_details = p1.json()
+        p1_id = p1_details['id']
+        p1_name = p1_details['name']
+
+        p1f9_scores = []
+        p1b9_scores = []
+
+        p1h1 = request.form.get('p1_hole_1_score')
+        p1h2 = request.form.get('p1_hole_2_score')
+        p1h3 = request.form.get('p1_hole_3_score')
+        p1h4 = request.form.get('p1_hole_4_score')
+        p1h5 = request.form.get('p1_hole_5_score')
+        p1h6 = request.form.get('p1_hole_6_score')
+        p1h7 = request.form.get('p1_hole_7_score')
+        p1h8 = request.form.get('p1_hole_8_score')
+        p1h9 = request.form.get('p1_hole_9_score')
+        p1h10 = request.form.get('p1_hole_10_score')
+        p1h11 = request.form.get('p1_hole_11_score')
+        p1h12 = request.form.get('p1_hole_12_score')
+        p1h13 = request.form.get('p1_hole_13_score')
+        p1h14 = request.form.get('p1_hole_14_score')
+        p1h15 = request.form.get('p1_hole_15_score')
+        p1h16 = request.form.get('p1_hole_16_score')
+        p1h17 = request.form.get('p1_hole_17_score')
+        p1h18 = request.form.get('p1_hole_18_score')
+
+        p1f9_scores.extend([p1h1, p1h2, p1h3, p1h4, p1h5, p1h6, p1h7, p1h8, p1h9])
+        p1b9_scores.extend([p1h10, p1h11, p1h12, p1h13, p1h14, p1h15, p1h16, p1h17, p1h18])
+
+        round_scores = []
+        
+        for i in range(len(p1f9_scores)):
+            round_scores.append(p1f9_scores[i])
+        for i in range(len(p1b9_scores)):
+            round_scores.append(p1b9_scores[i])
+
+        if len(p1f9_scores) == 9 and len(p1b9_scores) == 9:
+            round_type = '18 holes'
+
+        elif len(p1f9_scores) == 9 and len(p1b9_scores) != 9:
+            round_type = 'Front 9'
+
+        elif len(p1f9_scores) != 9 and len(p1b9_scores) == 9:
+            round_type = 'Back 9'
+
+        elif len(p1f9_scores) != 9 and len(p1b9_scores) != 9:
+            round_type = 'Incomplete'
+
+        round_date = request.form.get('round_date')
+        round_datetime = datetime.strptime(round_date, '%Y-%m-%d')
+        new_round_date = round_datetime.strftime('%m/%d/%Y')
+        round_datetime_utc = round_datetime.astimezone(pytz.utc)
+        round_timestamp = round_datetime_utc.timestamp()
+        current_datetime_utc = datetime.now(tz=pytz.utc)
+        enter_timestamp = current_datetime_utc.timestamp()
+
+        for i in range(1, 19):
+            hole_number = i
+            score = int(round_scores[i - 1])
+            p1_score = ScoreModel(course_id, p1_id, hole_number, score, round_type, round_timestamp, enter_timestamp)
+            p1_score.save_to_db()
+
+            if i < 10:
+                p1f9 += score
+            elif i >= 10:
+                p1b9 += score
+
+        p1_total_score = p1b9 + p1f9
+
+        p1h1, p1h2, p1h3, p1h4, p1h5, p1h6, p1h7, p1h8, p1h9 = [score for score in p1f9_scores]
+        p1h10, p1h11, p1h12, p1h13, p1h14, p1h15, p1h16, p1h17, p1h18 = [score for score in p1b9_scores]
+
+        return render_template('submitted_scorecard.jinja2', name=name, city=city, state=state, slope=slope,
+                               new_round_date=new_round_date, p1_name=p1_name,
+                               h1p=h1p, h2p=h2p, h3p=h3p, h4p=h4p, h5p=h5p, h6p=h6p, h7p=h7p, h8p=h8p, h9p=h9p,
+                               h10p=h10p, h11p=h11p, h12p=h12p, h13p=h13p, h14p=h14p, h15p=h15p, h16p=h16p, h17p=h17p,
+                               h18p=h18p, h1d=h1d, h2d=h2d, h3d=h3d, h4d=h4d, h5d=h5d, h6d=h6d, h7d=h7d, h8d=h8d,
+                               h9d=h9d, h10d=h10d, h11d=h11d, h12d=h12d, h13d=h13d, h14d=h14d, h15d=h15d, h16d=h16d,
+                               h17d=h17d,h18d=h18d, h1h=h1h, h2h=h2h, h3h=h3h, h4h=h4h, h5h=h5h, h6h=h6h, h7h=h7h,
+                               h8h=h8h, h9h=h9h, h10h=h10h, h11h=h11h, h12h=h12h, h13h=h13h, h14h=h14h, h15h=h15h,
+                               h16h=h16h, h17h=h17h, h18h=h18h, front_9_distance=front_9_distance,
+                               back_9_distance=back_9_distance, front_9_par=front_9_par, back_9_par=back_9_par,
+                               total_distance=total_distance, total_par=total_par, p1h1=p1h1, p1h2=p1h2, p1h3=p1h3,
+                               p1h4=p1h4, p1h5=p1h5, p1h6=p1h6, p1h7=p1h7, p1h8=p1h8, p1h9=p1h9, p1h10=p1h10, p1h11=p1h11,
+                               p1h12=p1h12, p1h13=p1h13, p1h14=p1h14,p1h15=p1h15, p1h16=p1h16, p1h17=p1h17, p1h18=p1h18,
+                               p1f9=p1f9, p1b9=p1b9, p1_total_score=p1_total_score)
 
     golfers_list = [golfer for golfer in GolferModel.find_all()]
 
     return render_template('course_scorecard.jinja2', name=name, city=city, state=state, slope=slope,
-                           hole_1_distance=hole_1_distance, hole_2_distance=hole_2_distance,
-                           hole_3_distance=hole_3_distance, hole_4_distance=hole_4_distance,
-                           hole_5_distance=hole_5_distance, hole_6_distance=hole_6_distance,
-                           hole_7_distance=hole_7_distance, hole_8_distance=hole_8_distance,
-                           hole_9_distance=hole_9_distance, hole_10_distance=hole_10_distance,
-                           hole_11_distance=hole_11_distance, hole_12_distance=hole_12_distance,
-                           hole_13_distance=hole_13_distance, hole_14_distance=hole_14_distance,
-                           hole_15_distance=hole_15_distance, hole_16_distance=hole_16_distance,
-                           hole_17_distance=hole_17_distance, hole_18_distance=hole_18_distance,
-                           hole_1_par=hole_1_par, hole_2_par=hole_2_par,
-                           hole_3_par=hole_3_par, hole_4_par=hole_4_par,
-                           hole_5_par=hole_5_par, hole_6_par=hole_6_par,
-                           hole_7_par=hole_7_par, hole_8_par=hole_8_par,
-                           hole_9_par=hole_9_par, hole_10_par=hole_10_par,
-                           hole_11_par=hole_11_par, hole_12_par=hole_12_par,
-                           hole_13_par=hole_13_par, hole_14_par=hole_14_par,
-                           hole_15_par=hole_15_par, hole_16_par=hole_16_par,
-                           hole_17_par=hole_17_par, hole_18_par=hole_18_par,
-                           hole_1_handicap=hole_1_handicap, hole_2_handicap=hole_2_handicap,
-                           hole_3_handicap=hole_3_handicap, hole_4_handicap=hole_4_handicap,
-                           hole_5_handicap=hole_5_handicap, hole_6_handicap=hole_6_handicap,
-                           hole_7_handicap=hole_7_handicap, hole_8_handicap=hole_8_handicap,
-                           hole_9_handicap=hole_9_handicap, hole_10_handicap=hole_10_handicap,
-                           hole_11_handicap=hole_11_handicap, hole_12_handicap=hole_12_handicap,
-                           hole_13_handicap=hole_13_handicap, hole_14_handicap=hole_14_handicap,
-                           hole_15_handicap=hole_15_handicap, hole_16_handicap=hole_16_handicap,
-                           hole_17_handicap=hole_17_handicap, hole_18_handicap=hole_18_handicap,
-                           front_9_distance=front_9_distance, back_9_distance=back_9_distance,
+                           h1p=h1p, h2p=h2p, h3p=h3p, h4p=h4p, h5p=h5p, h6p=h6p, h7p=h7p, h8p=h8p, h9p=h9p,
+                           h10p=h10p, h11p=h11p, h12p=h12p, h13p=h13p, h14p=h14p, h15p=h15p, h16p=h16p, h17p=h17p,
+                           h18p=h18p, h1d=h1d, h2d=h2d, h3d=h3d, h4d=h4d, h5d=h5d, h6d=h6d, h7d=h7d, h8d=h8d, h9d=h9d,
+                           h10d=h10d, h11d=h11d, h12d=h12d, h13d=h13d, h14d=h14d, h15d=h15d, h16d=h16d, h17d=h17d,
+                           h18d=h18d, h1h=h1h, h2h=h2h, h3h=h3h, h4h=h4h, h5h=h5h, h6h=h6h, h7h=h7h, h8h=h8h, h9h=h9h,
+                           h10h=h10h, h11h=h11h, h12h=h12h, h13h=h13h, h14h=h14h, h15h=h15h, h16h=h16h, h17h=h17h,
+                           h18h=h18h, front_9_distance=front_9_distance, back_9_distance=back_9_distance,
                            front_9_par=front_9_par, back_9_par=back_9_par,
                            total_distance=total_distance, total_par=total_par, golfers_list=golfers_list)
 
+@app.route('/golf/round/<int:enter_timestamp>')
+def submit_round(round_timestamp, enter_timestamp):
+    return render_template('submitted_scorecard.jinja2', round_timestamp=round_timestamp, enter_timestamp=enter_timestamp)
 
-@app.route('/golfers')
+@app.route('/golf/golfers')
 def golfers():
     golfers_list = [golfer for golfer in GolferModel.find_all()]
     return render_template("golfers.jinja2", golfers_list=golfers_list)
 
-
-api.add_resource(SingleCourse, '/scorecard/<string:name>')
-api.add_resource(CourseList, '/courses')
-api.add_resource(GolferList, '/golfers')
 
 if __name__ == '__main__':
     db.init_app(app)

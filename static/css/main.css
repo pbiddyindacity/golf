@@ -17,6 +17,13 @@ h1, h2, h3, h4, h5, h6 {
 .submit_button {
     text-align: center;
 }
+
+
+div[class="round_date"] {
+    margin: 0 auto;
+    text-align: center;
+}
+
 input[class="submit_button"] {
     max-width: 180px;
     color: #004b8c;
@@ -33,6 +40,24 @@ input[class="course_data"] {
     font-weight: bold;
     font-family: "museo sans", sans-serif;
     font-size: .8em;
+}
+
+input[class="round_date"] {
+    max-width: 120px;
+    color: #004b8c;
+    font-weight: bold;
+    font-family: "museo sans", sans-serif;
+    font-size: .7em;
+}
+
+input[type="date"] {
+    font-size: .7em;
+}
+
+label[class="round_date"] {
+    color: #004b8c;
+    font-size: .7em;
+    width: auto;
 }
 
 .collectdata {
@@ -168,7 +193,7 @@ label {
   label abbr {
     display: none; }
 
-textarea, input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], textarea, select[multiple=multiple] {
+textarea, input[type="color"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], textarea, select[multiple=multiple] {
   box-sizing: border-box;
   -webkit-transition: border-color;
   -moz-transition: border-color;
