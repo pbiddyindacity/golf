@@ -8,8 +8,8 @@ class ScoreModel(db.Model):
     hole_number = db.Column(db.Integer, db.ForeignKey('holes.hole_number'))
     score = db.Column(db.Integer)
     round_type = db.Column(db.Integer)
-    round_timestamp = db.Column(db.Integer)
-    enter_timestamp = db.Column(db.Integer)
+    round_timestamp = db.Column(db.DateTime)
+    enter_timestamp = db.Column(db.DateTime)
 
     golfer = db.relationship('GolferModel')
     course = db.relationship('CourseModel')
@@ -41,6 +41,10 @@ class ScoreModel(db.Model):
     @classmethod
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
+
+    @classmethod
+    def find_round_by_enter_timestamp(cls, enter_timestamp):
+        return cls.query.filter_by(enter_timestamp=enter_timestamp).all()
 
     @classmethod
     def find_all(cls):

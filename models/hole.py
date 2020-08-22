@@ -37,6 +37,10 @@ class HoleModel(db.Model):
         return cls.query.filter_by(course_id=course_id, hole_number=hole_number).first()
 
     @classmethod
+    def find_by_course(cls, course_id):
+        return cls.query.filter_by(course_id=course_id).all()
+
+    @classmethod
     def find_all(cls):
         return cls.query.all()
 

@@ -18,9 +18,10 @@
 
   <header>
     <h1>Scorecard</h1>
-    <p colspan="9" id="selected_course"><strong>{{ name }}</strong> in {{ city }}, {{ state }}  {{ zip_code }} on {{ new_round_date }}
+    <p colspan="9" id="selected_course"><strong>{{ round['course name'] }}</strong> in {{ round['city'] }}, {{ round['state'] }}
+      on {{ round['date'] }}
     <br>
-    <i>Slope: {{ slope }}</i>
+    <i>Slope: {{ round['slope'] }}</i>
     </p>
 
   </header>
@@ -64,26 +65,26 @@
       <tbody>
         <tr>
           <th data-type="player" class"rowheader">Distance</th>
-          <td>{{ h1d }}</td>
-          <td>{{ h2d }}</td>
-          <td>{{ h3d }}</td>
-          <td>{{ h4d }}</td>
-          <td>{{ h5d }}</td>
-          <td>{{ h6d }}</td>
-          <td>{{ h7d }}</td>
-          <td>{{ h8d }}</td>
-          <td>{{ h9d }}</td>
+          <td>{{ round['distance'][0] }}</td>
+          <td>{{ round['distance'][1] }}</td>
+          <td>{{ round['distance'][2] }}</td>
+          <td>{{ round['distance'][3] }}</td>
+          <td>{{ round['distance'][4] }}</td>
+          <td>{{ round['distance'][5] }}</td>
+          <td>{{ round['distance'][6] }}</td>
+          <td>{{ round['distance'][7] }}</td>
+          <td>{{ round['distance'][8] }}</td>
           <td>{{ front_9_distance }}</td>
 
-          <td>{{ h10d }}</td>
-          <td>{{ h11d }}</td>
-          <td>{{ h12d }}</td>
-          <td>{{ h13d }}</td>
-          <td>{{ h14d }}</td>
-          <td>{{ h15d }}</td>
-          <td>{{ h16d }}</td>
-          <td>{{ h17d }}</td>
-          <td>{{ h18d }}</td>
+          <td>{{ round['distance'][9] }}</td>
+          <td>{{ round['distance'][10] }}</td>
+          <td>{{ round['distance'][11] }}</td>
+          <td>{{ round['distance'][12] }}</td>
+          <td>{{ round['distance'][13] }}</td>
+          <td>{{ round['distance'][14] }}</td>
+          <td>{{ round['distance'][15] }}</td>
+          <td>{{ round['distance'][16] }}</td>
+          <td>{{ round['distance'][17] }}</td>
           <td>{{ back_9_distance }}</td>
 
           <td>{{ total_distance }}</td>
@@ -91,26 +92,26 @@
 
         <tr>
           <th data-type="player" class"rowheader">Handicap</th>
-          <td>{{ h1h }}</td>
-          <td>{{ h2h }}</td>
-          <td>{{ h3h }}</td>
-          <td>{{ h4h }}</td>
-          <td>{{ h5h }}</td>
-          <td>{{ h6h }}</td>
-          <td>{{ h7h }}</td>
-          <td>{{ h8h }}</td>
-          <td>{{ h9h }}</td>
+          <td>{{ round['handicap'][0] }}</td>
+          <td>{{ round['handicap'][1] }}</td>
+          <td>{{ round['handicap'][2] }}</td>
+          <td>{{ round['handicap'][3] }}</td>
+          <td>{{ round['handicap'][4] }}</td>
+          <td>{{ round['handicap'][5] }}</td>
+          <td>{{ round['handicap'][6] }}</td>
+          <td>{{ round['handicap'][7] }}</td>
+          <td>{{ round['handicap'][8] }}</td>
           <td>&nbsp;</td>
 
-          <td>{{ h10h }}</td>
-          <td>{{ h11h }}</td>
-          <td>{{ h12h }}</td>
-          <td>{{ h13h }}</td>
-          <td>{{ h14h }}</td>
-          <td>{{ h15h }}</td>
-          <td>{{ h16h }}</td>
-          <td>{{ h17h }}</td>
-          <td>{{ h18h }}</td>
+          <td>{{ round['handicap'][9] }}</td>
+          <td>{{ round['handicap'][10] }}</td>
+          <td>{{ round['handicap'][11] }}</td>
+          <td>{{ round['handicap'][12] }}</td>
+          <td>{{ round['handicap'][13] }}</td>
+          <td>{{ round['handicap'][14] }}</td>
+          <td>{{ round['handicap'][15] }}</td>
+          <td>{{ round['handicap'][16] }}</td>
+          <td>{{ round['handicap'][17] }}</td>
           <td>&nbsp;</td>
 
           <td>&nbsp;</td>
@@ -118,27 +119,27 @@
 
         <tr>
           <th data-type="player" class"rowheader">Par</th>
-          <td>{{ h1p }}</td>
-          <td>{{ h2p }}</td>
-          <td>{{ h3p }}</td>
-          <td>{{ h4p }}</td>
-          <td>{{ h5p }}</td>
-          <td>{{ h6p }}</td>
-          <td>{{ h7p }}</td>
-          <td>{{ h8p }}</td>
-          <td>{{ h9p }}</td>
+          <td>{{ round['par'][0] }}</td>
+          <td>{{ round['par'][1] }}</td>
+          <td>{{ round['par'][2] }}</td>
+          <td>{{ round['par'][3] }}</td>
+          <td>{{ round['par'][4] }}</td>
+          <td>{{ round['par'][5] }}</td>
+          <td>{{ round['par'][6] }}</td>
+          <td>{{ round['par'][7] }}</td>
+          <td>{{ round['par'][8] }}</td>
           <td>{{ front_9_par }}</td>
 
-          <td>{{ h10p }}</td>
-          <td>{{ h11p }}</td>
-          <td>{{ h12p }}</td>
-          <td>{{ h13p }}</td>
-          <td>{{ h14p }}</td>
-          <td>{{ h15p }}</td>
-          <td>{{ h16p }}</td>
-          <td>{{ h17p }}</td>
-          <td>{{ h18p }}</td>
-          <td>{{ back_9_par }}</td>
+          <td>{{ round['par'][9] }}</td>
+          <td>{{ round['par'][10] }}</td>
+          <td>{{ round['par'][11] }}</td>
+          <td>{{ round['par'][12] }}</td>
+          <td>{{ round['par'][13] }}</td>
+          <td>{{ round['par'][14] }}</td>
+          <td>{{ round['par'][15] }}</td>
+          <td>{{ round['par'][16] }}</td>
+          <td>{{ round['par'][17] }}</td>
+          <td>{{ sum(round['par'] }}</td>
 
           <td>{{ total_par }}</td>
         </tr>
@@ -207,6 +208,207 @@
           <td><span>{{ p1b9 }}</span></td>
 
           <td><span>{{ p1_total_score }}</span></td>
+        </tr>
+        
+        
+                <tr>
+
+          <th data-type="player" class"rowheader">
+            {{ p2_name }}
+          </th>
+          <td>
+            <span class="{{hole_1_style}}">{{ p2h1 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_2_style}}">{{ p2h2 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_3_style}}">{{ p2h3 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_4_style}}">{{ p2h4 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_5_style}}">{{ p2h5 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_6_style}}">{{ p2h6 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_7_style}}">{{ p2h7 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_8_style}}">{{ p2h8 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_9_style}}">{{ p2h9 }}</span>
+          </td>
+          <td><span>{{ p2f9 }}</span></td>
+
+          <td>
+            <span class="{{hole_10_style}}">{{ p2h10 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_11_style}}">{{ p2h11 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_12_style}}">{{ p2h12 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_13_style}}">{{ p2h13 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_14_style}}">{{ p2h14 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_15_style}}">{{ p2h15 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_16_style}}">{{ p2h16 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_17_style}}">{{ p2h17 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_18_style}}">{{ p2h18 }}</span>
+          </td>
+          <td><span>{{ p2b9 }}</span></td>
+
+          <td><span>{{ p2_total_score }}</span></td>
+        </tr>
+        
+        
+                <tr>
+
+          <th data-type="player" class"rowheader">
+            {{ p3_name }}
+          </th>
+          <td>
+            <span class="{{hole_1_style}}">{{ p3h1 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_2_style}}">{{ p3h2 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_3_style}}">{{ p3h3 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_4_style}}">{{ p3h4 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_5_style}}">{{ p3h5 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_6_style}}">{{ p3h6 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_7_style}}">{{ p3h7 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_8_style}}">{{ p3h8 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_9_style}}">{{ p3h9 }}</span>
+          </td>
+          <td><span>{{ p3f9 }}</span></td>
+
+          <td>
+            <span class="{{hole_10_style}}">{{ p3h10 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_11_style}}">{{ p3h11 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_12_style}}">{{ p3h12 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_13_style}}">{{ p3h13 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_14_style}}">{{ p3h14 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_15_style}}">{{ p3h15 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_16_style}}">{{ p3h16 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_17_style}}">{{ p3h17 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_18_style}}">{{ p3h18 }}</span>
+          </td>
+          <td><span>{{ p3b9 }}</span></td>
+
+          <td><span>{{ p3_total_score }}</span></td>
+        </tr>
+        
+
+        <tr>
+
+          <th data-type="player" class"rowheader">
+            {{ p4_name }}
+          </th>
+          <td>
+            <span class="{{hole_1_style}}">{{ p4h1 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_2_style}}">{{ p4h2 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_3_style}}">{{ p4h3 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_4_style}}">{{ p4h4 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_5_style}}">{{ p4h5 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_6_style}}">{{ p4h6 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_7_style}}">{{ p4h7 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_8_style}}">{{ p4h8 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_9_style}}">{{ p4h9 }}</span>
+          </td>
+          <td><span>{{ p4f9 }}</span></td>
+
+          <td>
+            <span class="{{hole_10_style}}">{{ p4h10 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_11_style}}">{{ p4h11 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_12_style}}">{{ p4h12 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_13_style}}">{{ p4h13 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_14_style}}">{{ p4h14 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_15_style}}">{{ p4h15 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_16_style}}">{{ p4h16 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_17_style}}">{{ p4h17 }}</span>
+          </td>
+          <td>
+            <span class="{{hole_18_style}}">{{ p4h18 }}</span>
+          </td>
+          <td><span>{{ p4b9 }}</span></td>
+
+          <td><span>{{ p4_total_score }}</span></td>
         </tr>
 
       </tbody>
