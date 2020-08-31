@@ -19,14 +19,14 @@ class Score(Resource):
                         type=str,
                         required=True,
                         help="Front 9, back 9, or 18 holes.")
-    parser.add_argument('round_timestamp',
-                        type=int,
+    parser.add_argument('round_datetime',
+                        type=str,
                         required=True,
-                        help="The timestamp of the date the round was played.")
-    parser.add_argument('enter_timestamp',
-                        type=int,
+                        help="The datetime of the date the round was played.")
+    parser.add_argument('enter_datetime',
+                        type=str,
                         required=True,
-                        help="The timestamp for when the round was entered into the database.")
+                        help="The datetime for when the round was entered into the database.")
 
     def get(self):
         pass

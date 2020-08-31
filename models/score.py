@@ -7,23 +7,23 @@ class ScoreModel(db.Model):
     golfer_id = db.Column(db.Integer, db.ForeignKey('golfers.id'))
     hole_number = db.Column(db.Integer, db.ForeignKey('holes.hole_number'))
     score = db.Column(db.Integer)
-    round_type = db.Column(db.Integer)
-    round_timestamp = db.Column(db.DateTime)
-    enter_timestamp = db.Column(db.DateTime)
+    round_type = db.Column(db.String)
+    round_string = db.Column(db.String)
+    enter_string = db.Column(db.String)
 
     golfer = db.relationship('GolferModel')
     course = db.relationship('CourseModel')
     hole = db.relationship('HoleModel')
 
     def __init__(self, course_id, golfer_id, hole_number, score, round_type,
-                 round_timestamp, enter_timestamp):
+                 round_string, enter_string):
         self.course_id = course_id
         self.golfer_id = golfer_id
         self.score = score
         self.hole_number = hole_number
         self.round_type = round_type
-        self.round_timestamp = round_timestamp
-        self.enter_timestamp = enter_timestamp
+        self.round_string = round_string
+        self.enter_string = enter_string
 
 
     def json(self):
@@ -34,8 +34,8 @@ class ScoreModel(db.Model):
             'score': self.score,
             'hole_number': self.hole_number,
             'round_type': self.round_type,
-            'round_timestamp': self.round_timestamp,
-            'enter_timestamp': self.enter_timestamp
+            'round_string': self.round_string,
+            'enter_string': self.enter_string
         }
 
     @classmethod
@@ -43,8 +43,8 @@ class ScoreModel(db.Model):
         return cls.query.filter_by(id=_id).first()
 
     @classmethod
-    def find_round_by_enter_timestamp(cls, enter_timestamp):
-        return cls.query.filter_by(enter_timestamp=enter_timestamp).all()
+    def find_round_by_enter_string(cls, enter_string):
+        return cls.query.filter_by(enter_string=enter_string).all()
 
     @classmethod
     def find_all(cls):

@@ -225,10 +225,10 @@ def course_scorecard(name):
         round_date = request.form.get('round_date')
         round_datetime = datetime.strptime(round_date, '%Y-%m-%d')
         new_round_date = round_datetime.strftime('%m/%d/%Y')
-        round_datetime_utc = round_datetime.astimezone(pytz.utc)
-        round_timestamp = round_datetime_utc.timestamp()
-        current_datetime_utc = datetime.now(tz=pytz.utc)
-        enter_timestamp = int(current_datetime_utc.timestamp())
+        round_datetime = round_datetime.astimezone(pytz.utc)
+        round_string = round_datetime.strftime('%Y%m%d%H%M%S')
+        enter_datetime = datetime.now(tz=pytz.utc)
+        enter_string = enter_datetime.strftime('%Y%m%d%H%M%S')
 
         p1f9_scores = []
         p1b9_scores = []
@@ -296,7 +296,7 @@ def course_scorecard(name):
             for i in range(1, 19):
                 hole_number = i
                 score = int(p1_round_scores[i - 1])
-                p1_score = ScoreModel(course_id, p1_id, hole_number, score, p1_round_type, round_timestamp, enter_timestamp)
+                p1_score = ScoreModel(course_id, p1_id, hole_number, score, p1_round_type, round_string, enter_string)
                 p1_score.save_to_db()
                 if i < 10:
                     p1f9 += score
@@ -358,7 +358,7 @@ def course_scorecard(name):
             for i in range(1, 19):
                 hole_number = i
                 score = int(p2_round_scores[i - 1])
-                p2_score = ScoreModel(course_id, p2_id, hole_number, score, p2_round_type, round_timestamp, enter_timestamp)
+                p2_score = ScoreModel(course_id, p2_id, hole_number, score, p2_round_type, round_string, enter_string)
                 p2_score.save_to_db()
                 if i < 10:
                     p2f9 += score
@@ -420,7 +420,7 @@ def course_scorecard(name):
             for i in range(1, 19):
                 hole_number = i
                 score = int(p3_round_scores[i - 1])
-                p3_score = ScoreModel(course_id, p3_id, hole_number, score, p3_round_type, round_timestamp, enter_timestamp)
+                p3_score = ScoreModel(course_id, p3_id, hole_number, score, p3_round_type, round_string, enter_string)
                 p3_score.save_to_db()
                 if i < 10:
                     p3f9 += score
@@ -482,7 +482,7 @@ def course_scorecard(name):
             for i in range(1, 19):
                 hole_number = i
                 score = int(p4_round_scores[i - 1])
-                p4_score = ScoreModel(course_id, p4_id, hole_number, score, p4_round_type, round_timestamp, enter_timestamp)
+                p4_score = ScoreModel(course_id, p4_id, hole_number, score, p4_round_type, round_string, enter_string)
                 p4_score.save_to_db()
                 if i < 10:
                     p4f9 += score
@@ -497,7 +497,7 @@ def course_scorecard(name):
         else:
             p4_name = p4f9 = p4b9 = ''
 
-        return redirect(url_for('round', course_name=course_name, enter_timestamp=enter_timestamp))
+        return redirect(url_for('round', course_name=course_name, enter_string=enter_string))
 
     golfers_list = [golfer for golfer in GolferModel.find_all()]
 
@@ -513,27 +513,39 @@ def course_scorecard(name):
                            total_distance=total_distance, total_par=total_par, golfers_list=golfers_list)
 
 
-@app.route('/golf/scorecard/<string:course_name>/<int:enter_timestamp>')
-def round(course_name, enter_timestamp):
-    scores = [score.json() for score in ScoreModel.find_round_by_enter_timestamp(enter_timestamp)]
+@app.route('/golf/scorecard/<string:course_name>/<string:enter_string>')
+def round(course_name, enter_string):
+    enter_datetime = datetime.strptime(enter_string, '%Y%m%d%H%M%S')
+    scores = [score.json() for score in ScoreModel.find_round_by_enter_string(enter_string)]
     p1_scores = [score['score'] for score in scores if score['golfer_id'] == 1]
     p2_scores = [score['score'] for score in scores if score['golfer_id'] == 2]
     p3_scores = [score['score'] for score in scores if score['golfer_id'] == 3]
     p4_scores = [score['score'] for score in scores if score['golfer_id'] == 4]
     course = CourseModel.find_by_id(scores[0]['course_id']).json()
     holes = [hole.json() for hole in HoleModel.find_by_course(course['id'])]
-    date = [score['round_timestamp'] for score in scores][0].strftime('%m/%d/%Y')
+    round_date = [score['round_string'] for score in scores][0]
+    date = datetime.strptime(round_date, '%Y%m%d%H%M%S')
+    round_date = date.strftime('%m/%d/%Y')
+    distance = [hole['distance'] for hole in holes]
+    par = [hole['par'] for hole in holes]
     round = {'p1_scores': p1_scores,
             'p2_scores': p2_scores,
             'p3_scores': p3_scores,
             'p4_scores': p4_scores,
+            'date': round_date,
             'course name': course['name'],
             'city': course['city'],
             'state': course['state'],
             'slope': course['slope'],
             'hole_numbers': [hole['hole_number'] for hole in holes],
-            'distance': [hole['distance'] for hole in holes],
-            'par': [hole['par'] for hole in holes],
+            'distance': distance,
+            'front_9_distance': sum(distance[:9]),
+            'back_9_distance': sum(distance[9:]),
+            'total_distance': sum(distance),      
+            'par': par,
+            'front_9_par': sum(par[:9]),
+            'back_9_par': sum(par[9:]),
+            'total_par': sum(par),
             'handicap': [hole['handicap'] for hole in holes]}
 
     return render_template('submitted_scorecard.jinja2', round=round)
