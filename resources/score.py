@@ -19,6 +19,10 @@ class Score(Resource):
                         type=str,
                         required=True,
                         help="Front 9, back 9, or 18 holes.")
+    parser.add_argument('scorecard_position',
+                        type=int,
+                        required=True,
+                        help="The position on the scorecard where the golfer's scores were entered.")
     parser.add_argument('round_datetime',
                         type=str,
                         required=True,
