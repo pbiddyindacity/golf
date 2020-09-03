@@ -7,28 +7,22 @@ class ScoreModel(db.Model):
     golfer_id = db.Column(db.Integer, db.ForeignKey('golfers.id'))
     hole_number = db.Column(db.Integer, db.ForeignKey('holes.hole_number'))
     score = db.Column(db.Integer)
-    round_type = db.Column(db.String)
     scorecard_position = db.Column(db.Integer)
     round_string = db.Column(db.String)
     enter_string = db.Column(db.String)
-
     golfer = db.relationship('GolferModel')
     course = db.relationship('CourseModel')
     hole = db.relationship('HoleModel')
 
-    def __init__(self, course_id, golfer_id, hole_number, score, round_type, scorecard_position,
-                 round_string, enter_string, golfer, course, hole):
+    def __init__(self, course_id, golfer_id, hole_number, score, scorecard_position,
+                 round_string, enter_string):
         self.course_id = course_id
         self.golfer_id = golfer_id
         self.score = score
         self.hole_number = hole_number
-        self.round_type = round_type
         self.scorecard_position = scorecard_position
         self.round_string = round_string
         self.enter_string = enter_string
-        self.golfer = golfer
-        self.course = course
-        self.hole = hole
 
     def json(self):
         return {
@@ -37,7 +31,6 @@ class ScoreModel(db.Model):
             'golfer_id': self.golfer_id,
             'score': self.score,
             'hole_number': self.hole_number,
-            'round_type': self.round_type,
             'scorecard_position': self.scorecard_position,
             'round_string': self.round_string,
             'enter_string': self.enter_string,

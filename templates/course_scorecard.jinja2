@@ -18,9 +18,9 @@
 
   <header>
     <h1>Scorecard</h1>
-    <p colspan="9" id="selected_course"><strong>{{ name }}</strong> in {{ city }}, {{ state }}  {{ zip_code }}
+    <p colspan="9" id="selected_course"><strong>{{ course_dict['name'] }}</strong> in {{ course_dict['city'] }}, {{ course_dict['state'] }}
     <br>
-    <i>Slope: {{ slope }}</i>
+    <i>Slope: {{ course_dict['slope'] }}</i>
     <form method="POST" id="scorecard" name="scorecard">
     <div class="round_date">
         <label for="round_date" class="round_date">Round Date: </label>
@@ -69,53 +69,53 @@
       <tbody>
         <tr>
           <th data-type="player" class"rowheader">Distance</th>
-          <td>{{ h1d }}</td>
-          <td>{{ h2d }}</td>
-          <td>{{ h3d }}</td>
-          <td>{{ h4d }}</td>
-          <td>{{ h5d }}</td>
-          <td>{{ h6d }}</td>
-          <td>{{ h7d }}</td>
-          <td>{{ h8d }}</td>
-          <td>{{ h9d }}</td>
-          <td>{{ front_9_distance }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][0] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][1] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][2] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][3] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][4] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][5] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][6] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][7] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][8] }}</td>
+          <td>{{ course_dict['distance']['front_9_distance'] }}</td>
 
-          <td>{{ h10d }}</td>
-          <td>{{ h11d }}</td>
-          <td>{{ h12d }}</td>
-          <td>{{ h13d }}</td>
-          <td>{{ h14d }}</td>
-          <td>{{ h15d }}</td>
-          <td>{{ h16d }}</td>
-          <td>{{ h17d }}</td>
-          <td>{{ h18d }}</td>
-          <td>{{ back_9_distance }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][9] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][10] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][11] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][12] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][13] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][14] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][15] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][16] }}</td>
+          <td>{{ course_dict['distance']['hole_distances'][17] }}</td>
+          <td>{{ course_dict['distance']['back_9_distance'] }}</td>
 
-          <td>{{ total_distance }}</td>
+          <td>{{ course_dict['distance']['total_distance'] }}</td>
         </tr>
 
         <tr>
           <th data-type="player" class"rowheader">Handicap</th>
-          <td>{{ h1h }}</td>
-          <td>{{ h2h }}</td>
-          <td>{{ h3h }}</td>
-          <td>{{ h4h }}</td>
-          <td>{{ h5h }}</td>
-          <td>{{ h6h }}</td>
-          <td>{{ h7h }}</td>
-          <td>{{ h8h }}</td>
-          <td>{{ h9h }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][0] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][1] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][2] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][3] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][4] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][5] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][6] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][7] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][8] }}</td>
           <td>&nbsp;</td>
 
-          <td>{{ h10h }}</td>
-          <td>{{ h11h }}</td>
-          <td>{{ h12h }}</td>
-          <td>{{ h13h }}</td>
-          <td>{{ h14h }}</td>
-          <td>{{ h15h }}</td>
-          <td>{{ h16h }}</td>
-          <td>{{ h17h }}</td>
-          <td>{{ h18h }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][9] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][10] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][11] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][12] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][13] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][14] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][15] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][16] }}</td>
+          <td>{{ course_dict['handicap']['hole_handicaps'][17] }}</td>
           <td>&nbsp;</td>
 
           <td>&nbsp;</td>
@@ -123,29 +123,29 @@
 
         <tr>
           <th data-type="player" class"rowheader">Par</th>
-          <td>{{ h1p }}</td>
-          <td>{{ h2p }}</td>
-          <td>{{ h3p }}</td>
-          <td>{{ h4p }}</td>
-          <td>{{ h5p }}</td>
-          <td>{{ h6p }}</td>
-          <td>{{ h7p }}</td>
-          <td>{{ h8p }}</td>
-          <td>{{ h9p }}</td>
-          <td>{{ front_9_par }}</td>
+          <td>{{ course_dict['par']['hole_pars'][0] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][1] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][2] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][3] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][4] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][5] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][6] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][7] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][8] }}</td>
+          <td>{{ course_dict['par']['front_9_par'] }}</td>
 
-          <td>{{ h10p }}</td>
-          <td>{{ h11p }}</td>
-          <td>{{ h12p }}</td>
-          <td>{{ h13p }}</td>
-          <td>{{ h14p }}</td>
-          <td>{{ h15p }}</td>
-          <td>{{ h16p }}</td>
-          <td>{{ h17p }}</td>
-          <td>{{ h18p }}</td>
-          <td>{{ back_9_par }}</td>
+          <td>{{ course_dict['par']['hole_pars'][9] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][10] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][11] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][12] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][13] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][14] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][15] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][16] }}</td>
+          <td>{{ course_dict['par']['hole_pars'][17] }}</td>
+          <td>{{ course_dict['par']['back_9_par'] }}</td>
 
-          <td>{{ total_par }}</td>
+          <td>{{ course_dict['par']['total_par'] }}</td>
         </tr>
 
         <tr>
@@ -159,94 +159,94 @@
         </select>
           </th>
           <td>
-            <span class="{{hole_1_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][0] }}">
                 <input type="text" class="score_input" id="p1_hole_1_score" name="p1_hole_1_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_2_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][1] }}">
                 <input type="text" class="score_input" id="p1_hole_2_score" name="p1_hole_2_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_3_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][2] }}">
                 <input type="text" class="score_input" id="p1_hole_3_score" name="p1_hole_3_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_4_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][3] }}">
                 <input type="text" class="score_input" id="p1_hole_4_score" name="p1_hole_4_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_5_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][4] }}">
                 <input type="text" class="score_input" id="p1_hole_5_score" name="p1_hole_5_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_6_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][5] }}">
                 <input type="text" class="score_input" id="p1_hole_6_score" name="p1_hole_6_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_7_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][6] }}">
                 <input type="text" class="score_input" id="p1_hole_7_score" name="p1_hole_7_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_8_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][7] }}">
                 <input type="text" class="score_input" id="p1_hole_8_score" name="p1_hole_8_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_9_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][8] }}">
                 <input type="text" class="score_input" id="p1_hole_9_score" name="p1_hole_9_score" maxlength="2">
             </span>
           </td>
           <td></td>
 
           <td>
-            <span class="{{hole_10_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][9] }}">
                 <input type="text" class="score_input" id="p1_hole_10_score" name="p1_hole_10_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_11_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][10] }}">
                 <input type="text" class="score_input" id="p1_hole_11_score" name="p1_hole_11_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_12_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][11] }}">
                 <input type="text" class="score_input" id="p1_hole_12_score" name="p1_hole_12_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_13_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][12] }}">
                 <input type="text" class="score_input" id="p1_hole_13_score" name="p1_hole_13_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_14_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][13] }}">
                 <input type="text" class="score_input" id="p1_hole_14_score" name="p1_hole_14_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_15_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][14] }}">
                 <input type="text" class="score_input" id="p1_hole_15_score" name="p1_hole_15_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_16_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][15] }}">
                 <input type="text" class="score_input" id="p1_hole_16_score" name="p1_hole_16_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_17_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][16] }}">
                 <input type="text" class="score_input" id="p1_hole_17_score" name="p1_hole_17_score" maxlength="2">
             </span>
           </td>
           <td>
-            <span class="{{hole_18_style}}">
+            <span class="{{ round['score_styles']['p1']['styles'][17] }}">
                 <input type="text" class="score_input" id="p1_hole_18_score" name="p1_hole_18_score" maxlength="2">
             </span>
           </td>
