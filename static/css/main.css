@@ -31,11 +31,26 @@ input[class="submit_button"] {
     font-family: "museo sans", sans-serif;
     font-size: .8em;
     margin: 0 auto;
-
+}
+input[class="golfer_submit_button"] {
+    max-width: 180px;
+    color: #004b8c;
+    font-weight: bold;
+    font-family: "museo sans", sans-serif;
+    font-size: .8em;
+    margin: 0 auto;
+    margin-left: 55px;
 }
 
 input[class="course_data"] {
     max-width: 180px;
+    color: #004b8c;
+    font-weight: bold;
+    font-family: "museo sans", sans-serif;
+    font-size: .8em;
+}
+input[class="golfer_data"] {
+    max-width: 260px;
     color: #004b8c;
     font-weight: bold;
     font-family: "museo sans", sans-serif;
@@ -52,6 +67,15 @@ input[class="round_date"] {
 
 input[type="date"] {
     font-size: .7em;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 label[class="round_date"] {
@@ -186,8 +210,32 @@ label {
   text-align: right;
   display: inline-block;
   width: 35px;
+  font-size: 12px;
+  }
 
-   }
+.courselabel {
+  font-weight: bold;
+  margin-bottom: 0.375em;
+  margin-right: .25em;
+  margin-left: .5em;
+  text-align: right;
+  display: inline-block;
+  width: 35px;
+  font-size: 12px;
+  }
+
+.golferlabel {
+  font-weight: bold;
+  margin-bottom: 0.375em;
+  margin-right: .25em;
+  margin-left: .5em;
+  text-align: right;
+  display: inline-block;
+  width: 40px;
+  font-size: 12px;
+  }
+
+
   label.required:after {
     content: "*"; }
   label abbr {

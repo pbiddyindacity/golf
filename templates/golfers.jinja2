@@ -4,8 +4,8 @@
 
 <h3>Available Golfers</h3>
 <ul id="golfers">
-    {% for golfer in golfers_list %}
-        <li>{{golfer['name']}}</li>
+    {% for golfer in golfer_list %}
+        <a href="{{ url_for('golfer_details', name=golfer['name']) }}">{{golfer['name']}}</a>
     {% endfor %}
 </ul>
 

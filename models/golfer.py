@@ -6,6 +6,7 @@ class GolferModel(db.Model):
     name = db.Column(db.String(80))
     email = db.Column(db.String(80))
     phone = db.Column(db.String(80))
+    left_right = db.Column(db.String(80))
 
     def __init__(self, name, email, phone):
         self.name = name

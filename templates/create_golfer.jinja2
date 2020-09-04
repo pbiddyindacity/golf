@@ -1,19 +1,35 @@
 {% extends 'base.jinja2' %}
 
 {% block content %}
+<head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Scorecard</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width">
+      <link rel="stylesheet" href="{{ url_for ('static', filename='css/main.css') }}">
+
+
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="../static/javascript/script.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Create Golfer</h1>
+  </header>
 <form method="POST">
 <br>
-<label for="name">Golfer Name:</label>
-<input type="text" id="name" name="name">
+<label for="name" class="golferlabel">Name:</label>
+<input type="text" class="golfer_data" id="name" name="name">
 <br>
-<label for="email">Email:</label>
-<input type="text" id="email" name="email">
+<label for="email" class="golferlabel">Email:</label>
+<input type="text" class="golfer_data" id="email" name="email">
 <br>
-<label for="phone">Phone Number:</label>
-<input type="text" id="phone" name="phone">
+<label for="phone" class="golferlabel">Phone:</label>
+<input type="text" class="golfer_data" id="phone" name="phone">
 <br>
 <br>
-<input type="submit" value="Submit New Golfer">
+<input type="submit" class="golfer_submit_button" value="Submit New Golfer">
 </form>
-
+</body>
 {% endblock %}

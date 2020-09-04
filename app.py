@@ -9,6 +9,7 @@ from models.course import CourseModel
 from models.golfer import GolferModel
 from models.hole import HoleModel
 from models.score import ScoreModel
+from resources.golfer import GolferRegister, GolferList
 from datetime import datetime
 
 
@@ -30,20 +31,25 @@ def home():
     return render_template('home.jinja2')
 
 
-@app.route('/golf/golfer/create', methods=['GET', 'POST'])
+@app.route('/golf/golfer/create')
 def create_golfer():
-    if request.method == "POST":
-        name = request.form.get('name')
-        email = request.form.get('email')
-        phone = request.form.get('phone')
-        golfer = GolferModel(name, email, phone)
-        if golfer.find_by_name(name):
-            return {'message': f'A golfer named {name} already exists.'}
-        golfer.save_to_db()
-        golfers_list = golfer.find_all()
-        return render_template('golfer_created.jinja2', name=name, golfers_list=golfers_list)
-
     return render_template('create_golfer.jinja2')
+
+
+@app.route('/golf/golfer/<string:data>')
+def golfer_created(data):
+    return render_template('golfer_created.jinja2', name=data)
+
+
+@app.route('/golf/golfers')
+def golfers():
+    golfer_list = [golfer.json() for golfer in GolferModel.find_all()]
+    print(golfer_list)
+    return render_template("golfers.jinja2", golfer_list=golfer_list)
+
+@app.route('/golf/golfers/<string:name>')
+def golfer_details(name):
+    return render_template('golfer_details.jinja2', name=name)
 
 
 @app.route('/golf/scorecard', methods=['GET', 'POST'])
@@ -214,10 +220,10 @@ def round(course_name, enter_string):
                    'p3': {'name': '', 'score_list': '', 'front_9': '', 'back_9': '', 'total': ''},
                    'p4': {'name': '', 'score_list': '', 'front_9': '', 'back_9': '', 'total': ''}
                    }
-    score_styles = {'p1': [],
-                   'p2': [],
-                   'p3': [],
-                   'p4': []
+    score_styles = {'p1': {'styles': []},
+                   'p2': {'styles': []},
+                   'p3': {'styles': []},
+                   'p4': {'styles': []}
                    }
 
     scores = [score.json() for score in ScoreModel.find_round_by_enter_string(enter_string)]
@@ -238,36 +244,37 @@ def round(course_name, enter_string):
                 front_9 = sum(round_scores[:9])
                 back_9 = sum(round_scores[9:])
                 total = sum(round_scores)
-        for q in range(len(round_scores)):
-            if round_scores[q] == 0:
-                round_scores[q] = ''
-                styles_list.append("par")
-            else:
-                if round_scores[q] - par[q] <= -2:
-                    styles_list.append("eagle")
-                elif round_scores[q] - par[q] == -1:
-                    styles_list.append("birdie")
-                elif round_scores[q] - par[q] == 0:
+        if round_scores:
+            for q in range(len(round_scores)):
+                if round_scores[q] == 0:
+                    round_scores[q] = ''
                     styles_list.append("par")
-                elif round_scores[q] - par[q] == 1:
-                    styles_list.append("bogey")
-                elif round_scores[q] - par[q] == 2:
-                    styles_list.append("double-bogey")
-                elif round_scores[q] - par[q] >= 3:
-                    styles_list.append("triple-bogey")
+                else:
+                    if round_scores[q] - par[q] <= -2:
+                        styles_list.append("eagle")
+                    elif round_scores[q] - par[q] == -1:
+                        styles_list.append("birdie")
+                    elif round_scores[q] - par[q] == 0:
+                        styles_list.append("par")
+                    elif round_scores[q] - par[q] == 1:
+                        styles_list.append("bogey")
+                    elif round_scores[q] - par[q] == 2:
+                        styles_list.append("double-bogey")
+                    elif round_scores[q] - par[q] >= 3:
+                        styles_list.append("triple-bogey")
 
-                if name is not None and scores is not None:
-                    player_string = "p" + str(i)
-                    scores_dict[player_string] = {
-                        'name': name,
-                        'score_list': round_scores,
-                        'front_9': front_9,
-                        'back_9': back_9,
-                        'total': total
-                    }
-                    score_styles[player_string] = {
-                        'styles': styles_list
-                    }
+                    if name is not None and scores is not None:
+                        player_string = "p" + str(i)
+                        scores_dict[player_string] = {
+                            'name': name,
+                            'score_list': round_scores,
+                            'front_9': front_9,
+                            'back_9': back_9,
+                            'total': total
+                        }
+                        score_styles[player_string] = {
+                            'styles': styles_list
+                        }
 
         name = round_scores = front_9 = back_9 = total = None
 
@@ -300,10 +307,9 @@ def round(course_name, enter_string):
     return render_template('submitted_scorecard.jinja2', round=round)
 
 
-@app.route('/golf/golfers')
-def golfers():
-    golfers_list = [golfer for golfer in GolferModel.find_all()]
-    return render_template("golfers.jinja2", golfers_list=golfers_list)
+api.add_resource(GolferRegister, '/golf/golfer/create')
+api.add_resource(GolferList, '/golf/golfers')
+
 
 
 if __name__ == '__main__':
